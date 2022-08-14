@@ -16,7 +16,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
-public class Users implements UserDetails {
+public class UserEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
