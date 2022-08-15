@@ -1,4 +1,4 @@
-package com.example.clothingstoreapi.Persistence.Entities;
+package com.example.clothingstoreapi.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

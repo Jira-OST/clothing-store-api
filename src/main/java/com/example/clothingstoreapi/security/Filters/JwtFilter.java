@@ -1,7 +1,7 @@
-package com.example.clothingstoreapi.Security.Filters;
+package com.example.clothingstoreapi.security.Filters;
 
-import com.example.clothingstoreapi.Security.Service.CustomUserDetailsService;
-import com.example.clothingstoreapi.Security.Util.JwtUtil;
+import com.example.clothingstoreapi.security.Service.CustomUserDetailsService;
+import com.example.clothingstoreapi.security.Util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

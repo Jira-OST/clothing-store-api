@@ -1,7 +1,7 @@
-package com.example.clothingstoreapi.Security.Config;
+package com.example.clothingstoreapi.security.Config;
 
-import com.example.clothingstoreapi.Security.Filters.JwtFilter;
-import com.example.clothingstoreapi.Security.Service.CustomUserDetailsService;
+import com.example.clothingstoreapi.security.Filters.JwtFilter;
+import com.example.clothingstoreapi.security.Service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

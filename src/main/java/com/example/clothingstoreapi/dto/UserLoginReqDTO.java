@@ -1,4 +1,4 @@
-package com.example.clothingstoreapi.Persistence.DTOs;
+package com.example.clothingstoreapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLoginReqDto {
+public class UserLoginReqDTO {
     private String email;
     private String password;
 }

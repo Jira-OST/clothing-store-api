@@ -1,4 +1,4 @@
-package com.example.clothingstoreapi.Persistence.DTOs;
+package com.example.clothingstoreapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class UserLoginResDto {
+public class UserLoginResDTO {
     private String email;
     private String token;
 }

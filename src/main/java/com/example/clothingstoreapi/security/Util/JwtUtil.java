@@ -1,4 +1,4 @@
-package com.example.clothingstoreapi.Security.Util;
+package com.example.clothingstoreapi.security.Util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

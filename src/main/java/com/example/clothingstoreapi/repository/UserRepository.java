@@ -1,6 +1,6 @@
-package com.example.clothingstoreapi.Persistence.Repositories;
+package com.example.clothingstoreapi.repository;
 
-import com.example.clothingstoreapi.Persistence.Entities.UserEntity;
+import com.example.clothingstoreapi.entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

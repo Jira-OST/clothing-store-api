@@ -1,24 +1,20 @@
-package com.example.clothingstoreapi.Service.Impl;
+package com.example.clothingstoreapi.service.Impl;
 
-import com.example.clothingstoreapi.Persistence.DTOs.UserRegisterReqDto;
-import com.example.clothingstoreapi.Persistence.Entities.UserEntity;
-import com.example.clothingstoreapi.Persistence.Repositories.UserRepository;
-import com.example.clothingstoreapi.Service.UserService;
+import com.example.clothingstoreapi.dto.UserRegisterReqDTO;
+import com.example.clothingstoreapi.entity.UserEntity;
+import com.example.clothingstoreapi.repository.UserRepository;
+import com.example.clothingstoreapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity saveUser(UserRegisterReqDto user) {
+    public UserEntity saveUser(UserRegisterReqDTO user) {
         log.info("Saving new user {} to the database", user.getFullName());
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userRepo.save(userEntity);

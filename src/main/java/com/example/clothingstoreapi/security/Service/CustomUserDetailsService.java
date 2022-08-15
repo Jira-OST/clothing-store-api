@@ -1,7 +1,7 @@
-package com.example.clothingstoreapi.Security.Service;
+package com.example.clothingstoreapi.security.Service;
 
-import com.example.clothingstoreapi.Persistence.Entities.UserEntity;
-import com.example.clothingstoreapi.Persistence.Repositories.UserRepository;
+import com.example.clothingstoreapi.entity.UserEntity;
+import com.example.clothingstoreapi.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

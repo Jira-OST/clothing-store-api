@@ -1,13 +1,13 @@
-package com.example.clothingstoreapi.Controllers;
+package com.example.clothingstoreapi.controller;
 
-import com.example.clothingstoreapi.Security.Util.JwtUtil;
+import com.example.clothingstoreapi.security.Util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class testContoller {
+public class TestContoller {
 
     @Autowired
     JwtUtil jwtUtil;
