@@ -23,7 +23,7 @@ public class ProductController {
         return productService.getProductById(id);
     }
     @PostMapping("/add")
-    public ProductDTO createNewProduct(@RequestParam ProductDTO newProduct) {
+    public ProductDTO createNewProduct(@RequestBody ProductDTO newProduct) {
         return productService.createNewProduct(newProduct);
     }
     @DeleteMapping("/del/{id}")
