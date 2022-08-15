@@ -10,7 +10,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "product")
-public class Product {
+public class ProductEntity {
 
     public static enum Size {
         Small, Medium, Large

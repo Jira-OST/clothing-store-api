@@ -1,7 +1,6 @@
 package com.example.clothingstoreapi.controller;
 
 import com.example.clothingstoreapi.dto.ProductDTO;
-import com.example.clothingstoreapi.entity.Product;
 import com.example.clothingstoreapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

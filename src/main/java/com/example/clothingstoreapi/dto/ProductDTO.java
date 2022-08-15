@@ -1,6 +1,6 @@
 package com.example.clothingstoreapi.dto;
 
-import com.example.clothingstoreapi.entity.Product;
+import com.example.clothingstoreapi.entity.ProductEntity;
 import lombok.*;
 
 @Getter
@@ -13,8 +13,8 @@ public class ProductDTO {
     private String name;
     private Double price;
     private String image;
-    private Product.Size size;
-    private Product.Color color;
+    private ProductEntity.Size size;
+    private ProductEntity.Color color;
     private boolean isAddedToCart;
-    private Product.Category category;
+    private ProductEntity.Category category;
 }

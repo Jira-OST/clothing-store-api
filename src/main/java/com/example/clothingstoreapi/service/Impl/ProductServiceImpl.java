@@ -1,7 +1,7 @@
 package com.example.clothingstoreapi.service.Impl;
 
 import com.example.clothingstoreapi.dto.ProductDTO;
-import com.example.clothingstoreapi.entity.Product;
+import com.example.clothingstoreapi.entity.ProductEntity;
 import com.example.clothingstoreapi.repository.ProductRepository;
 import com.example.clothingstoreapi.service.ProductService;
 import org.springframework.beans.BeanUtils;
@@ -19,15 +19,15 @@ public class ProductServiceImpl implements ProductService {
 
 
     public List<ProductDTO> getAllProduct() {
-        List<Product> products = (List<Product>) productRepository.findAll();
+        List<ProductEntity> productEntities = (List<ProductEntity>) productRepository.findAll();
         List<ProductDTO> productDTOList = null;
 
-        if(!products.isEmpty()) {
+        if(!productEntities.isEmpty()) {
             productDTOList = new ArrayList<>();
             ProductDTO productDTO = null;
-            for (Product product : products) {
+            for (ProductEntity productEntity : productEntities) {
                 productDTO = new ProductDTO();
-                BeanUtils.copyProperties(product, productDTO);
+                BeanUtils.copyProperties(productEntity, productDTO);
                 productDTOList.add(productDTO);
             }
         }
@@ -39,18 +39,18 @@ public class ProductServiceImpl implements ProductService {
         ProductDTO productDTO = null;
         if (id != null) {
             productDTO = new ProductDTO();
-            Product product = productRepository.findById(id).get();
-            BeanUtils.copyProperties(product, productDTO);
+            ProductEntity productEntity = productRepository.findById(id).get();
+            BeanUtils.copyProperties(productEntity, productDTO);
         }
         return productDTO;
     }
 
     public ProductDTO createNewProduct(ProductDTO newProduct) {
-        Product product = null;
+        ProductEntity productEntity = null;
         if (newProduct != null) {
-            product = new Product();
-            BeanUtils.copyProperties(newProduct, product);
-            productRepository.save(product);
+            productEntity = new ProductEntity();
+            BeanUtils.copyProperties(newProduct, productEntity);
+            productRepository.save(productEntity);
         }
         return newProduct;
     }
