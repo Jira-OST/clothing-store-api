@@ -1,15 +1,19 @@
 package com.example.clothingstoreapi.service;
 
 
-import com.example.clothingstoreapi.dto.UserRegisterReqDTO;
+import com.example.clothingstoreapi.dto.UpdateProfileReqDTO;
+import com.example.clothingstoreapi.dto.UserProfileDTO;
 import com.example.clothingstoreapi.entity.UserEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
-    UserEntity saveUser(UserRegisterReqDTO user);
-    UserEntity getUser(String email);
+    ResponseEntity saveUser(UserProfileDTO user);
+    ResponseEntity getUser(String email);
+
+    ResponseEntity updateUser(UpdateProfileReqDTO user);
 
     List<UserEntity> getAllUsers();
 }
