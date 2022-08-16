@@ -19,7 +19,7 @@ public class ProfilesController {
     }
     @GetMapping("/profile")
     public ResponseEntity getProfile(@RequestParam String email) {
-        return ResponseEntity.ok().body(userService.getUser(email));
+        return userService.getUser(email);
     }
 
 }
