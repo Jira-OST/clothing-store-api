@@ -5,6 +5,7 @@ import com.example.clothingstoreapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
@@ -15,7 +16,11 @@ public class ProductController {
 
     @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/all")
-    public List<ProductDTO> getAllProduct() {
+    public List<ProductDTO> getAllProduct(HttpServletResponse response) {
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
+        response.addHeader("Access-Control-Allow-Headers", "X-Requested-With,content-type");
+        response.addHeader("Access-Control-Allow-Credentials", "true");
         return productService.getAllProduct();
     }
     @CrossOrigin(origins = "*", maxAge = 3600)
