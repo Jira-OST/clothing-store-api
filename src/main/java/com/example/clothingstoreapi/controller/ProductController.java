@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/product/v1")
+@RequestMapping("/product/v2")
 public class ProductController {
     @Autowired
     private ProductService productService;
