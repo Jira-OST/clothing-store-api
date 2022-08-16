@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api")
 public class UserController {
     @Autowired
@@ -22,12 +21,12 @@ public class UserController {
 
     @Autowired
     AuthenticationManager authenticationManager;
-
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @PostMapping("/auth/register")
     public ResponseEntity<?> register(@RequestBody UserProfileDTO userRegisterReq){
         return userService.saveUser(userRegisterReq);
     }
-
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody UserLoginReqDTO userLoginReq) {
         try {
@@ -41,6 +40,7 @@ public class UserController {
     }
 
     // For testing only
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/users")
     public ResponseEntity getAllUsers() {
         return ResponseEntity.ok().body(userService.getAllUsers());

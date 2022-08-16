@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 public class TestContoller {
 
     @Autowired
     JwtUtil jwtUtil;
-
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/api")
     public ResponseEntity<?> testApi(){
         return ResponseEntity.ok().body("Hello from api Router");

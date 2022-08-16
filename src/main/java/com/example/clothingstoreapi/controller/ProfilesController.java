@@ -7,17 +7,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api")
 public class ProfilesController {
 
     @Autowired
     UserService userService;
-
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @PutMapping("/profile")
     public ResponseEntity<?> updateProfile(@RequestBody UpdateProfileReqDTO user) {
         return userService.updateUser(user);
     }
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/profile")
     public ResponseEntity getProfile(@RequestParam String email) {
         return userService.getUser(email);

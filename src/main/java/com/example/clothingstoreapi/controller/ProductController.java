@@ -8,24 +8,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/product/v1")
 public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/all")
     public List<ProductDTO> getAllProduct() {
         return productService.getAllProduct();
     }
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/product")
     public ProductDTO getProductById(@RequestParam Long id) {
         return productService.getProductById(id);
     }
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @PostMapping("/add")
     public ProductDTO createNewProduct(@RequestBody ProductDTO newProduct) {
         return productService.createNewProduct(newProduct);
     }
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @DeleteMapping("/del/{id}")
     public boolean deleteProductById(@PathVariable Long id) {
         return  productService.deleteProductById(id);
