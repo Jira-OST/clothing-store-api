@@ -12,7 +12,7 @@ public class TestContoller {
 
     @Autowired
     JwtUtil jwtUtil;
-    @CrossOrigin(origins = "*", maxAge = 3600)
+
     @GetMapping("/api")
     public ResponseEntity<?> testApi(){
         return ResponseEntity.ok().body("Hello from api Router");
