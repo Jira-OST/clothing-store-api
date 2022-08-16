@@ -2,7 +2,7 @@ package com.example.clothingstoreapi.controller;
 
 import com.example.clothingstoreapi.dto.UserLoginReqDTO;
 import com.example.clothingstoreapi.dto.UserLoginResDTO;
-import com.example.clothingstoreapi.dto.UserRegisterReqDTO;
+import com.example.clothingstoreapi.dto.UserProfileDTO;
 import com.example.clothingstoreapi.security.Util.JwtUtil;
 import com.example.clothingstoreapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +23,8 @@ public class UserController {
     AuthenticationManager authenticationManager;
 
     @PostMapping("/auth/register")
-    public ResponseEntity<?> register(@RequestBody UserRegisterReqDTO userRegisterReq){
-        userService.saveUser(userRegisterReq);
-        return ResponseEntity.ok().build();
-
+    public ResponseEntity<?> register(@RequestBody UserProfileDTO userRegisterReq){
+        return userService.saveUser(userRegisterReq);
     }
 
     @PostMapping("/auth/login")
