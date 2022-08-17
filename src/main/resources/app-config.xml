@@ -1,0 +1,9 @@
+<mvc:cors>
+    <mvc:mapping path="/**"
+                 allowed-origins="**"
+                 allowed-methods="POST, GET, PUT, DELETE"
+                 allowed-headers="Content-Type"
+                 exposed-headers="header-1, header-2"
+                 allow-credentials="false"
+                 max-age="6000"/>
+</mvc:cors>
