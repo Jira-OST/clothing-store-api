@@ -2,11 +2,13 @@ package com.example.clothingstoreapi.service.Impl;
 
 import com.example.clothingstoreapi.dto.ProductDTO;
 import com.example.clothingstoreapi.entity.ProductEntity;
+import com.example.clothingstoreapi.exception.ProductNotFoundException;
 import com.example.clothingstoreapi.repository.ProductRepository;
 import com.example.clothingstoreapi.service.ProductService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.core.parameters.P;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -38,9 +40,11 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO getProductById(Long id) {
         ProductDTO productDTO = null;
         if (id != null) {
-            productDTO = new ProductDTO();
-            ProductEntity productEntity = productRepository.findById(id).get();
-            BeanUtils.copyProperties(productEntity, productDTO);
+            if (productRepository.findById(id).isPresent()) {
+                productDTO = new ProductDTO();
+                ProductEntity productEntity = productRepository.findById(id).get();
+                BeanUtils.copyProperties(productEntity, productDTO);
+            }
         }
         return productDTO;
     }
@@ -61,6 +65,29 @@ public class ProductServiceImpl implements ProductService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean addProductToCart(Long id) {
+            if (productRepository.findById(id).isPresent()) {
+                ProductEntity productEntity = productRepository.findById(id).get();
+                productEntity.setAddedToCart(true);
+                productRepository.save(productEntity);
+                return true;
+            }
+            throw new ProductNotFoundException();
+
+    }
+
+    @Override
+    public boolean removeProductFromCart(Long id) {
+        if (productRepository.findById(id).isPresent()) {
+            ProductEntity productEntity = productRepository.findById(id).get();
+            productEntity.setAddedToCart(false);
+            productRepository.save(productEntity);
+            return true;
+        }
+        throw new ProductNotFoundException();
     }
 
 }
