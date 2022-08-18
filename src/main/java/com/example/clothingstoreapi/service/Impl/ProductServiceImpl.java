@@ -66,6 +66,7 @@ public class ProductServiceImpl implements ProductService {
         List<ClothingProductDTO> clothingProductDTOList = new ArrayList<>();
         productEntityList.forEach(product -> {
             ClothingProductDTO clothingProductDTO = modelMapper.map(product, ClothingProductDTO.class);
+            clothingProductDTO.setCategory(product.getClothingCategory());
             clothingProductDTOList.add(clothingProductDTO);
         });
         return ResponseEntity.ok().body(clothingProductDTOList);
