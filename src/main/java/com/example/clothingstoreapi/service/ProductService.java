@@ -13,4 +13,7 @@ public interface ProductService {
     public ProductDTO getProductById(Long id);
     public ProductDTO createNewProduct(ProductDTO newProduct);
     public boolean deleteProductById(Long id);
+    public boolean addProductToCart(Long id);
+    public boolean removeProductFromCart(Long id);
+
 }
