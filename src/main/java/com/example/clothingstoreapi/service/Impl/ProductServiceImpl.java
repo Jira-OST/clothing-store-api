@@ -1,10 +1,12 @@
 package com.example.clothingstoreapi.service.Impl;
 
+import com.example.clothingstoreapi.dto.ClothingProductDTO;
 import com.example.clothingstoreapi.dto.ProductDTO;
 import com.example.clothingstoreapi.entity.ProductEntity;
 import com.example.clothingstoreapi.exception.ProductNotFoundException;
 import com.example.clothingstoreapi.repository.ProductRepository;
 import com.example.clothingstoreapi.service.ProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.core.parameters.P;
@@ -18,6 +20,10 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
+
 
 
     public List<ProductDTO> getAllProduct() {
@@ -47,6 +53,23 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         return productDTO;
+    }
+
+    @Override
+    public ResponseEntity getProductsByClothingCategory(ProductEntity.ClothingCategory clothingCategory) {
+        List<ProductEntity> productEntityList;
+        try{
+            productEntityList = productRepository.getProductEntityByClothingCategory(clothingCategory);
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().body(e);
+        }
+        List<ClothingProductDTO> clothingProductDTOList = new ArrayList<>();
+        productEntityList.forEach(product -> {
+            ClothingProductDTO clothingProductDTO = modelMapper.map(product, ClothingProductDTO.class);
+            clothingProductDTOList.add(clothingProductDTO);
+        });
+        return ResponseEntity.ok().body(clothingProductDTOList);
+
     }
 
     public ProductDTO createNewProduct(ProductDTO newProduct) {
