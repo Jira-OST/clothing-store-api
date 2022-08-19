@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity getUser(String email) {
+    public UserProfileDTO getUser(String email) {
         log.info("Fetching user by email: {}", email);
 
         UserEntity user =  userRepo.findByEmail(email)
@@ -79,6 +79,6 @@ public class UserServiceImpl implements UserService {
                         () -> new UsernameNotFoundException("Email : " + email + " not found.")
                 );
         UserProfileDTO userProfileDTO = modelMapper.map(user, UserProfileDTO.class);
-        return ResponseEntity.ok().body(userProfileDTO);
+        return userProfileDTO;
     }
 }

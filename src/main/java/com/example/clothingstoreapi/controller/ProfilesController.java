@@ -17,15 +17,17 @@ public class ProfilesController {
     @Autowired
     JwtUtil jwtUtil;
     @PutMapping("/profile")
-    public ResponseEntity<?> updateProfile(@RequestBody UserProfileDTO profile, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        System.out.println(token);
+    public ResponseEntity<?> updateProfile(@RequestBody UserProfileDTO profile,
+                                           @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         token = token.substring(7);
         String email = jwtUtil.extractUsername(token);
         return ResponseEntity.ok().body(userService.updateUser(email, profile));
     }
     @GetMapping("/profile")
-    public ResponseEntity getProfile(@RequestParam String email) {
-        return userService.getUser(email);
+    public ResponseEntity getProfile(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        token = token.substring(7);
+        String email = jwtUtil.extractUsername(token);
+        return ResponseEntity.ok().body(userService.getUser(email));
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface UserService extends UserDetailsService {
     ResponseEntity saveUser(UserProfileDTO user);
-    ResponseEntity getUser(String email);
+    UserProfileDTO getUser(String email);
 
     UserProfileDTO updateUser(String email, UserProfileDTO userProfile);
 
