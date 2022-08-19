@@ -1,7 +1,5 @@
 package com.example.clothingstoreapi.service.Impl;
 
-import com.example.clothingstoreapi.dto.UpdateProfileReqDTO;
-import com.example.clothingstoreapi.dto.UpdateProfileResDTO;
 import com.example.clothingstoreapi.dto.UserProfileDTO;
 import com.example.clothingstoreapi.entity.UserEntity;
 import com.example.clothingstoreapi.repository.UserRepository;
@@ -9,19 +7,22 @@ import com.example.clothingstoreapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-// @Transactional ask
+@Transactional
 @Slf4j
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepo;
@@ -51,28 +52,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseEntity updateUser(UpdateProfileReqDTO newUser) {
-        log.info("Updating user with email: ", newUser.getEmail());
+    public UserProfileDTO updateUser(String email, UserProfileDTO userProfile) {
+        log.info("Updating user with email: {}", email);
         UserEntity user;
         try {
-            user = userRepo.findByEmail(newUser.getEmail()).get();
+            user = userRepo.findByEmail(email).get();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Old email is not valid");
+            log.error("Email ({}) extracted from token is not valid ", email);
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Invalid token", e);
         }
-        if(newUser.getNewFullName() != null) {
-            user.setFullName(newUser.getNewFullName());
-        }
-        if(newUser.getNewEmail() != null) {
-            user.setEmail(newUser.getNewEmail());
-        }
-        if(newUser.getNewPassword() != null) {
-            user.setPassword(newUser.getNewPassword());
-        }
+        user.setEmail(userProfile.getEmail());
+        user.setPassword(userProfile.getPassword());
+        user.setFullName(userProfile.getFullName());
         userRepo.save(user);
-
-        UpdateProfileResDTO updateProfileResDTO = modelMapper.map(user, UpdateProfileResDTO.class);
-        return ResponseEntity.ok().body(updateProfileResDTO);
-
+        UserProfileDTO userProfileDTO = modelMapper.map(user, UserProfileDTO.class);
+        return userProfileDTO;
     }
 
     @Override
