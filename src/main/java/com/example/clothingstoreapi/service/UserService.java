@@ -1,7 +1,6 @@
 package com.example.clothingstoreapi.service;
 
 
-import com.example.clothingstoreapi.dto.UpdateProfileReqDTO;
 import com.example.clothingstoreapi.dto.UserProfileDTO;
 import com.example.clothingstoreapi.entity.UserEntity;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +10,9 @@ import java.util.List;
 
 public interface UserService extends UserDetailsService {
     ResponseEntity saveUser(UserProfileDTO user);
-    ResponseEntity getUser(String email);
+    UserProfileDTO getUser(String email);
 
-    ResponseEntity updateUser(UpdateProfileReqDTO user);
+    UserProfileDTO updateUser(String email, UserProfileDTO userProfile);
 
     List<UserEntity> getAllUsers();
 }
