@@ -21,6 +21,11 @@ public class ProductEntity {
     public static enum Category {
         food, clothes, coffee
     }
+
+    public static enum ClothingCategory {
+        tops, pants, dress
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -46,6 +51,12 @@ public class ProductEntity {
 
     @Column(name = "category")
     private Category category;
+
+    @Column(name = "clothing_category")
+    private ClothingCategory clothingCategory;
+
+    @Column(name = "description")
+    private String description;
 
 
 }

@@ -1,12 +1,16 @@
 package com.example.clothingstoreapi.service.Impl;
 
+import com.example.clothingstoreapi.dto.ClothingProductDTO;
 import com.example.clothingstoreapi.dto.ProductDTO;
 import com.example.clothingstoreapi.entity.ProductEntity;
+import com.example.clothingstoreapi.exception.ProductNotFoundException;
 import com.example.clothingstoreapi.repository.ProductRepository;
 import com.example.clothingstoreapi.service.ProductService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.core.parameters.P;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +20,10 @@ import java.util.List;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
+
 
 
     public List<ProductDTO> getAllProduct() {
@@ -38,11 +46,31 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO getProductById(Long id) {
         ProductDTO productDTO = null;
         if (id != null) {
-            productDTO = new ProductDTO();
-            ProductEntity productEntity = productRepository.findById(id).get();
-            BeanUtils.copyProperties(productEntity, productDTO);
+            if (productRepository.findById(id).isPresent()) {
+                productDTO = new ProductDTO();
+                ProductEntity productEntity = productRepository.findById(id).get();
+                BeanUtils.copyProperties(productEntity, productDTO);
+            }
         }
         return productDTO;
+    }
+
+    @Override
+    public ResponseEntity getProductsByClothingCategory(ProductEntity.ClothingCategory clothingCategory) {
+        List<ProductEntity> productEntityList;
+        try{
+            productEntityList = productRepository.getProductEntityByClothingCategory(clothingCategory);
+        } catch (Exception e){
+            return ResponseEntity.internalServerError().body(e);
+        }
+        List<ClothingProductDTO> clothingProductDTOList = new ArrayList<>();
+        productEntityList.forEach(product -> {
+            ClothingProductDTO clothingProductDTO = modelMapper.map(product, ClothingProductDTO.class);
+            clothingProductDTO.setCategory(product.getClothingCategory());
+            clothingProductDTOList.add(clothingProductDTO);
+        });
+        return ResponseEntity.ok().body(clothingProductDTOList);
+
     }
 
     public ProductDTO createNewProduct(ProductDTO newProduct) {
@@ -61,6 +89,29 @@ public class ProductServiceImpl implements ProductService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean addProductToCart(Long id) {
+            if (productRepository.findById(id).isPresent()) {
+                ProductEntity productEntity = productRepository.findById(id).get();
+                productEntity.setAddedToCart(true);
+                productRepository.save(productEntity);
+                return true;
+            }
+            throw new ProductNotFoundException();
+
+    }
+
+    @Override
+    public boolean removeProductFromCart(Long id) {
+        if (productRepository.findById(id).isPresent()) {
+            ProductEntity productEntity = productRepository.findById(id).get();
+            productEntity.setAddedToCart(false);
+            productRepository.save(productEntity);
+            return true;
+        }
+        throw new ProductNotFoundException();
     }
 
 }

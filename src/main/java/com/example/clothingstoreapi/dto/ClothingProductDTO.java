@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ProductDTO {
+public class ClothingProductDTO {
     private Long id;
     private String name;
     private Double price;
@@ -16,7 +16,6 @@ public class ProductDTO {
     private ProductEntity.Size size;
     private ProductEntity.Color color;
     private boolean isAddedToCart;
-    private ProductEntity.Category category;
-    private ProductEntity.ClothingCategory clothingCategory;
+    private ProductEntity.ClothingCategory category;
     private String description;
 }
