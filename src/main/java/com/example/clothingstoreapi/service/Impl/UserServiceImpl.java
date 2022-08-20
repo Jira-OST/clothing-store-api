@@ -40,12 +40,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserEntity> getAllUsers() {
+        log.info("Fetching all users");
         return (List<UserEntity>) userRepo.findAll();
     }
 
     @Override
     public ResponseEntity saveUser(UserProfileDTO user) {
-        log.info("Saving new user {} to the database", user.getFullName());
+        log.info("Saving new user to the database, with the following info: {}", user);
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userRepo.save(userEntity);
         return ResponseEntity.ok().body(user);
