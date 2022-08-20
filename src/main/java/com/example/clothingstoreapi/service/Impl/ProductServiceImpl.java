@@ -6,6 +6,7 @@ import com.example.clothingstoreapi.entity.ProductEntity;
 import com.example.clothingstoreapi.exception.ProductNotFoundException;
 import com.example.clothingstoreapi.repository.ProductRepository;
 import com.example.clothingstoreapi.service.ProductService;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
@@ -27,6 +29,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     public List<ProductDTO> getAllProduct() {
+        log.info("fetching all products");
+
         List<ProductEntity> productEntities = (List<ProductEntity>) productRepository.findAll();
         List<ProductDTO> productDTOList = null;
 
@@ -44,6 +48,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public ProductDTO getProductById(Long id) {
+        log.info("fetching product with id: {}", id);
+
         ProductDTO productDTO = null;
         if (id != null) {
             if (productRepository.findById(id).isPresent()) {
@@ -57,6 +63,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity getProductsByClothingCategory(ProductEntity.ClothingCategory clothingCategory) {
+        log.info("fetching products of clothing category: {}", clothingCategory);
+
         List<ProductEntity> productEntityList;
         try{
             productEntityList = productRepository.getProductEntityByClothingCategory(clothingCategory);
@@ -74,6 +82,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public ProductDTO createNewProduct(ProductDTO newProduct) {
+        log.info("Creating a product with the following data: {}", newProduct);
         ProductEntity productEntity = null;
         if (newProduct != null) {
             productEntity = new ProductEntity();
@@ -84,6 +93,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public boolean deleteProductById(Long id) {
+        log.info("deleting product with id: {}", id);
         if (id != null) {
             productRepository.deleteById(id);
             return true;
@@ -93,24 +103,28 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean addProductToCart(Long id) {
+        log.info("Adding product with id: {} to the cart", id);
             if (productRepository.findById(id).isPresent()) {
                 ProductEntity productEntity = productRepository.findById(id).get();
                 productEntity.setAddedToCart(true);
                 productRepository.save(productEntity);
                 return true;
             }
+        log.error("Product with id: {} not found", id);
             throw new ProductNotFoundException();
 
     }
 
     @Override
     public boolean removeProductFromCart(Long id) {
+        log.info("Removing product with id: {} from the cart", id);
         if (productRepository.findById(id).isPresent()) {
             ProductEntity productEntity = productRepository.findById(id).get();
             productEntity.setAddedToCart(false);
             productRepository.save(productEntity);
             return true;
         }
+        log.error("Product with id: {} not found", id);
         throw new ProductNotFoundException();
     }
 
