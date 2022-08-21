@@ -1,4 +1,4 @@
-package com.example.clothingstoreapi.dto;
+package com.example.clothingstoreapi.entity.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

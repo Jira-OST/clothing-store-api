@@ -18,11 +18,9 @@ public class ProductEntity {
     public static enum Color {
         Red, Blue, Green, Yellow, White, Black
     }
-    public static enum Category {
-        food, clothes, coffee
-    }
 
-    public static enum ClothingCategory {
+
+    public static enum Category {
         tops, pants, dress
     }
 
@@ -51,9 +49,6 @@ public class ProductEntity {
 
     @Column(name = "category")
     private Category category;
-
-    @Column(name = "clothing_category")
-    private ClothingCategory clothingCategory;
 
     @Column(name = "description")
     private String description;

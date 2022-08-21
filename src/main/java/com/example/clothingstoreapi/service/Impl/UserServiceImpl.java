@@ -1,6 +1,6 @@
 package com.example.clothingstoreapi.service.Impl;
 
-import com.example.clothingstoreapi.dto.UserProfileDTO;
+import com.example.clothingstoreapi.entity.dto.UserProfileDTO;
 import com.example.clothingstoreapi.entity.UserEntity;
 import com.example.clothingstoreapi.repository.UserRepository;
 import com.example.clothingstoreapi.service.UserService;

@@ -1,7 +1,7 @@
 package com.example.clothingstoreapi.service;
 
 
-import com.example.clothingstoreapi.dto.UserProfileDTO;
+import com.example.clothingstoreapi.entity.dto.UserProfileDTO;
 import com.example.clothingstoreapi.entity.UserEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
