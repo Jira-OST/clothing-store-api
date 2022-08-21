@@ -1,7 +1,6 @@
 package com.example.clothingstoreapi.service.Impl;
 
-import com.example.clothingstoreapi.dto.ClothingProductDTO;
-import com.example.clothingstoreapi.dto.ProductDTO;
+import com.example.clothingstoreapi.entity.dto.ProductDTO;
 import com.example.clothingstoreapi.entity.ProductEntity;
 import com.example.clothingstoreapi.exception.ProductNotFoundException;
 import com.example.clothingstoreapi.repository.ProductRepository;
@@ -11,8 +10,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.core.parameters.P;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,22 +62,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity getProductsByClothingCategory(ProductEntity.ClothingCategory clothingCategory) {
-        log.info("fetching products of clothing category: {}", clothingCategory);
+    public List<ProductDTO> getProductsByCategory(ProductEntity.Category category) {
+        log.info("fetching products of clothing category: {}", category);
 
         List<ProductEntity> productEntityList;
         try{
-            productEntityList = productRepository.getProductEntityByClothingCategory(clothingCategory);
+            productEntityList = productRepository.getProductEntityByCategory(category);
         } catch (Exception e){
-            return ResponseEntity.internalServerError().body(e);
+            throw new ResponseStatusException(
+                    HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong while trying to get products!", e);
         }
-        List<ClothingProductDTO> clothingProductDTOList = new ArrayList<>();
+        List<ProductDTO> ProductDTOList = new ArrayList<>();
         productEntityList.forEach(product -> {
-            ClothingProductDTO clothingProductDTO = modelMapper.map(product, ClothingProductDTO.class);
-            clothingProductDTO.setCategory(product.getClothingCategory());
-            clothingProductDTOList.add(clothingProductDTO);
+            ProductDTO clothingProductDTO = modelMapper.map(product, ProductDTO.class);
+            ProductDTOList.add(clothingProductDTO);
         });
-        return ResponseEntity.ok().body(clothingProductDTOList);
+        return ProductDTOList;
 
     }
 

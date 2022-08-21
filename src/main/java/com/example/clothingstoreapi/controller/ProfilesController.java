@@ -1,6 +1,6 @@
 package com.example.clothingstoreapi.controller;
 
-import com.example.clothingstoreapi.dto.UserProfileDTO;
+import com.example.clothingstoreapi.entity.dto.UserProfileDTO;
 import com.example.clothingstoreapi.security.Util.JwtUtil;
 import com.example.clothingstoreapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

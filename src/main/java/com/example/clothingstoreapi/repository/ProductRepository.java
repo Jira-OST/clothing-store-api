@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends CrudRepository<ProductEntity, Long> {
-    public List<ProductEntity> getProductEntityByClothingCategory(ProductEntity.ClothingCategory clothingCategory);
+    public List<ProductEntity> getProductEntityByCategory(ProductEntity.Category category);
 
 }

@@ -1,4 +1,4 @@
-package com.example.clothingstoreapi.dto;
+package com.example.clothingstoreapi.entity.dto;
 
 import com.example.clothingstoreapi.entity.ProductEntity;
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class ClothingProductDTO {
+public class ProductDTO {
     private Long id;
     private String name;
     private Double price;
@@ -16,6 +16,6 @@ public class ClothingProductDTO {
     private ProductEntity.Size size;
     private ProductEntity.Color color;
     private boolean isAddedToCart;
-    private ProductEntity.ClothingCategory category;
+    private ProductEntity.Category category;
     private String description;
 }
