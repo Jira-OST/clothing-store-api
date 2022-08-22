@@ -10,12 +10,17 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.core.parameters.P;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -28,24 +33,28 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-    public List<ProductDTO> getAllProduct() {
+    public Page<ProductDTO> getAllProduct(int pageNumber, int pageSize) {
         log.info("fetching all products");
-
-        List<ProductEntity> productEntities = (List<ProductEntity>) productRepository.findAll();
-        List<ProductDTO> productDTOList = null;
-
-        if(!productEntities.isEmpty()) {
-            productDTOList = new ArrayList<>();
-            ProductDTO productDTO = null;
-            for (ProductEntity productEntity : productEntities) {
-                productDTO = new ProductDTO();
-                BeanUtils.copyProperties(productEntity, productDTO);
-                productDTOList.add(productDTO);
-            }
-        }
-
-        return productDTOList;
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        Page<ProductEntity> productPage =  productRepository.findAll(page);
+        int totalElements = (int) productPage.getTotalElements();
+        return new PageImpl<ProductDTO>(productPage.getContent()
+                .stream()
+                .map(product -> new ProductDTO(
+                        product.getId(),
+                        product.getName(),
+                        product.getPrice(),
+                        product.getImage(),
+                        product.getSize(),
+                        product.getColor(),
+                        product.isAddedToCart(),
+                        product.getCategory(),
+                        product.getDescription()
+                        ))
+                .collect(Collectors.toList()), page, totalElements);
     }
+
+
 
     public ProductDTO getProductById(Long id) {
         log.info("fetching product with id: {}", id);

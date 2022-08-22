@@ -12,14 +12,16 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
     @Autowired
     private ProductService productService;
-    @GetMapping("/all")
-    public ResponseEntity getAllProduct() {
-        return  ResponseEntity.ok().body(productService.getAllProduct());
-    }
 
-    @GetMapping("/category")
-    public ResponseEntity getProductsByCategory(@RequestParam ProductEntity.Category category) {
-        return ResponseEntity.ok().body(productService.getProductsByCategory(category));
+    @GetMapping("/products")
+    public ResponseEntity getProductsByCategory(@RequestParam(required = false) ProductEntity.Category category,
+                                                @RequestParam int pageNumber,
+                                                @RequestParam int pageSize) {
+        if (category != null) {
+            return ResponseEntity.ok().body(productService.getProductsByCategory(category));
+        } else {
+            return ResponseEntity.ok().body(productService.getAllProduct(pageNumber, pageSize));
+        }
     }
 
     @GetMapping("/product")
