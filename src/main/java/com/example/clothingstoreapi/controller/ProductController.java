@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/product/v1")
 public class ProductController {
@@ -29,7 +31,7 @@ public class ProductController {
         return ResponseEntity.ok().body(productService.getProductById(id));
     }
     @PostMapping("/add")
-    public ResponseEntity createNewProduct(@RequestBody ProductDTO newProduct) {
+    public ResponseEntity createNewProduct(@Valid @RequestBody ProductDTO newProduct) {
         return ResponseEntity.ok().body(productService.createNewProduct(newProduct));
     }
     @DeleteMapping("/del/{id}")
