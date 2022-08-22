@@ -12,6 +12,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 @Slf4j
@@ -25,12 +27,12 @@ public class UserController {
     AuthenticationManager authenticationManager;
 
     @PostMapping("/auth/register")
-    public ResponseEntity<?> register(@RequestBody UserProfileDTO userRegisterReq){
+    public ResponseEntity<?> register(@Valid @RequestBody UserProfileDTO userRegisterReq){
         return userService.saveUser(userRegisterReq);
     }
 
     @PostMapping("/auth/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginReqDTO userLoginReq) {
+    public ResponseEntity<?> login(@Valid @RequestBody UserLoginReqDTO userLoginReq) {
         log.info("User: {} trying to login", userLoginReq);
         try {
             authenticationManager.authenticate(
