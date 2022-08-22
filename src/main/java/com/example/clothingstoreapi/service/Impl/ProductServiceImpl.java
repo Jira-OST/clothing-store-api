@@ -1,6 +1,6 @@
 package com.example.clothingstoreapi.service.Impl;
 
-import com.example.clothingstoreapi.entity.dto.ProductDTO;
+import com.example.clothingstoreapi.dto.ProductDTO;
 import com.example.clothingstoreapi.entity.ProductEntity;
 import com.example.clothingstoreapi.exception.ProductNotFoundException;
 import com.example.clothingstoreapi.repository.ProductRepository;

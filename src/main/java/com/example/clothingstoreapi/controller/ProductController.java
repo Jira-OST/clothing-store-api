@@ -1,15 +1,11 @@
 package com.example.clothingstoreapi.controller;
 
-import com.example.clothingstoreapi.entity.dto.ProductDTO;
+import com.example.clothingstoreapi.dto.ProductDTO;
 import com.example.clothingstoreapi.entity.ProductEntity;
 import com.example.clothingstoreapi.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.clothingstoreapi.exception.ProductNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @RestController
 @RequestMapping("/product/v1")

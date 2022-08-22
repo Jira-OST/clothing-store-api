@@ -1,8 +1,8 @@
 package com.example.clothingstoreapi.controller;
 
-import com.example.clothingstoreapi.entity.dto.UserLoginReqDTO;
-import com.example.clothingstoreapi.entity.dto.UserLoginResDTO;
-import com.example.clothingstoreapi.entity.dto.UserProfileDTO;
+import com.example.clothingstoreapi.dto.UserLoginReqDTO;
+import com.example.clothingstoreapi.dto.UserLoginResDTO;
+import com.example.clothingstoreapi.dto.UserProfileDTO;
 import com.example.clothingstoreapi.security.Util.JwtUtil;
 import com.example.clothingstoreapi.service.UserService;
 import lombok.extern.slf4j.Slf4j;

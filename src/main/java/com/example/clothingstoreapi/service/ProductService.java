@@ -1,6 +1,6 @@
 package com.example.clothingstoreapi.service;
 
-import com.example.clothingstoreapi.entity.dto.ProductDTO;
+import com.example.clothingstoreapi.dto.ProductDTO;
 import com.example.clothingstoreapi.entity.ProductEntity;
 
 import java.util.List;
