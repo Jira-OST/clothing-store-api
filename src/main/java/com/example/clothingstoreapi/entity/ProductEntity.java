@@ -3,8 +3,11 @@ package com.example.clothingstoreapi.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
@@ -29,12 +32,13 @@ public class ProductEntity {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
+    @NotNull(message = "Name cannot be null")
     private String name;
-
+    @NotNull(message = "price cannot be null")
     @Column(name = "price")
     private Double price;
-
+    @URL
     @Column(name = "image_url")
     private String image;
 
