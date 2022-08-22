@@ -48,7 +48,12 @@ public class UserServiceImpl implements UserService {
     public ResponseEntity saveUser(UserProfileDTO user) {
         log.info("Saving new user to the database, with the following info: {}", user.getFullName());
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
-        userRepo.save(userEntity);
+        try {
+            userRepo.save(userEntity);
+        } catch (Exception e) {
+            log.error("Error saving user to the database: {}", e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Error saving user to the database");
+        }
         return ResponseEntity.ok().body(user);
     }
 
@@ -66,7 +71,13 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userProfile.getEmail());
         user.setPassword(userProfile.getPassword());
         user.setFullName(userProfile.getFullName());
-        userRepo.save(user);
+        try {
+            userRepo.save(user);
+        } catch (Exception e) {
+            log.error("Error updating user with email: {}", email);
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Error updating user with email: " + email, e);
+        }
         UserProfileDTO userProfileDTO = modelMapper.map(user, UserProfileDTO.class);
         return userProfileDTO;
     }
