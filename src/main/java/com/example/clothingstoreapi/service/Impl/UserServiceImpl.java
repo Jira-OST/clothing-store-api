@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseEntity saveUser(UserProfileDTO user) {
-        log.info("Saving new user to the database, with the following info: {}", user);
+        log.info("Saving new user to the database, with the following info: {}", user.getFullName());
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userRepo.save(userEntity);
         return ResponseEntity.ok().body(user);

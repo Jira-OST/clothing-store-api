@@ -8,6 +8,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api")
 public class ProfilesController {
@@ -17,7 +19,7 @@ public class ProfilesController {
     @Autowired
     JwtUtil jwtUtil;
     @PutMapping("/profile")
-    public ResponseEntity<?> updateProfile(@RequestBody UserProfileDTO profile,
+    public ResponseEntity<?> updateProfile(@Valid @RequestBody UserProfileDTO profile,
                                            @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         token = token.substring(7);
         String email = jwtUtil.extractUsername(token);
