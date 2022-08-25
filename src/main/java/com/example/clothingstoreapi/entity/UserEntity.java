@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,6 +31,15 @@ public class UserEntity implements UserDetails {
 
     @Column(nullable = false, length = 64)
     private String password;
+    @ManyToMany
+    @JoinTable(
+            name="cart",
+            joinColumns=
+            @JoinColumn(name="user_id"),
+            inverseJoinColumns=
+            @JoinColumn(name="product_id")
+    )
+    private Set<ProductEntity> productsInCart;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
