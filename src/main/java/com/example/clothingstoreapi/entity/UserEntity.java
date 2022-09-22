@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -31,6 +32,11 @@ public class UserEntity implements UserDetails {
 
     @Column(nullable = false, length = 64)
     private String password;
+
+    @Lob
+    @Type(type = "org.hibernate.type.ImageType")
+    private byte[] picture;
+
     @ManyToMany
     @JoinTable(
             name="cart",
