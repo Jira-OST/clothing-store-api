@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.transaction.Transactional;
@@ -42,6 +43,29 @@ public class UserServiceImpl implements UserService {
     public List<UserEntity> getAllUsers() {
         log.info("Fetching all users");
         return (List<UserEntity>) userRepo.findAll();
+    }
+
+    @Override
+    public UserProfileDTO updatePicture(String email, byte[] image) {
+        log.info("Updating user picture with email: {}", email);
+        UserEntity user;
+        try {
+            user = userRepo.findByEmail(email).get();
+        } catch (Exception e) {
+            log.error("Email ({}) extracted from token is not valid ", email);
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Invalid token", e);
+        }
+        user.setPicture(image);
+        try {
+            userRepo.save(user);
+        } catch (Exception e) {
+            log.error("Error updating user with email: {}", email);
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, "Error updating user with email: " + email, e);
+        }
+        UserProfileDTO userProfileDTO = modelMapper.map(user, UserProfileDTO.class);
+        return userProfileDTO;
     }
 
     @Override
