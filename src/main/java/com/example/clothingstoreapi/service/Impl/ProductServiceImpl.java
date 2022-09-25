@@ -10,10 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 // import org.springframework.security.core.parameters.P;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,6 +18,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Service
 @Slf4j
@@ -33,9 +32,12 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-    public Page<ProductDTO> getAllProduct(int pageNumber, int pageSize) {
+    public Page<ProductDTO> getAllProduct(int pageNumber, int pageSize, Boolean sortedByPrice, Boolean isDESC) {
         log.info("fetching all products");
-        Pageable page = PageRequest.of(pageNumber, pageSize);
+        Pageable page = null;
+        if (sortedByPrice && !isDESC) page = PageRequest.of(pageNumber, pageSize, Sort.by("price"));
+        else if (sortedByPrice) page = PageRequest.of(pageNumber, pageSize, Sort.by(DESC,"price"));
+        else page = PageRequest.of(pageNumber, pageSize);
         Page<ProductEntity> productPage =  productRepository.findAll(page);
         int totalElements = (int) productPage.getTotalElements();
         return new PageImpl<ProductDTO>(productPage.getContent()
