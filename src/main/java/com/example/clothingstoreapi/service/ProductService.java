@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface ProductService {
-    public Page<ProductDTO> getAllProduct(int pageNumber, int pageSize);
+    public Page<ProductDTO> getAllProduct(int pageNumber, int pageSize,Boolean sortedByPrice, Boolean isDESC);
     public List<ProductDTO> getProductsByCategory(ProductEntity.Category category);
     public ProductDTO getProductById(Long id);
     public ProductDTO createNewProduct(ProductDTO newProduct);
