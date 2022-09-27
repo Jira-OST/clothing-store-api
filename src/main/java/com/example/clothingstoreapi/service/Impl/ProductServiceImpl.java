@@ -32,11 +32,11 @@ public class ProductServiceImpl implements ProductService {
 
 
 
-    public Page<ProductDTO> getAllProduct(int pageNumber, int pageSize, Boolean sortedByPrice, Boolean isDESC) {
+    public Page<ProductDTO> getAllProduct(int pageNumber, int pageSize, String sortField, Boolean isDESC) {
         log.info("fetching all products");
         Pageable page = null;
-        if (sortedByPrice && !isDESC) page = PageRequest.of(pageNumber, pageSize, Sort.by("price"));
-        else if (sortedByPrice) page = PageRequest.of(pageNumber, pageSize, Sort.by(DESC,"price"));
+        if (sortField != null && !isDESC) page = PageRequest.of(pageNumber, pageSize, Sort.by(sortField));
+        else if (sortField != null) page = PageRequest.of(pageNumber, pageSize, Sort.by(DESC,sortField));
         else page = PageRequest.of(pageNumber, pageSize);
         Page<ProductEntity> productPage =  productRepository.findAll(page);
         int totalElements = (int) productPage.getTotalElements();
