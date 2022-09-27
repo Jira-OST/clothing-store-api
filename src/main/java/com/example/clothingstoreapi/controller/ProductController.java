@@ -19,12 +19,12 @@ public class ProductController {
     public ResponseEntity getProductsByCategory(@RequestParam(required = false) ProductEntity.Category category,
                                                 @RequestParam int pageNumber,
                                                 @RequestParam int pageSize,
-                                                @RequestParam Boolean sortedByPrice,
-                                                @RequestParam Boolean isDESC) {
+                                                @RequestParam(required = false) String sortField,
+                                                @RequestParam(required = false) Boolean isDESC) {
         if (category != null) {
             return ResponseEntity.ok().body(productService.getProductsByCategory(category));
         } else {
-            return ResponseEntity.ok().body(productService.getAllProduct(pageNumber, pageSize, sortedByPrice, isDESC));
+            return ResponseEntity.ok().body(productService.getAllProduct(pageNumber, pageSize, sortField, isDESC));
         }
     }
 
